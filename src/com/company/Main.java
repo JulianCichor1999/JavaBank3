@@ -6,7 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 /*
 to do
@@ -71,7 +75,17 @@ public class Main extends JFrame implements Runnable {
         setContentPane(new JPanel());
 
 //        wczytanie kart
-        klienci = Reader.getKlienci();
+//        klienci = Reader.getKlienci();
+        klienci = new ArrayList<>();
+        try (Stream<String> stream = Files.lines(Paths.get("klienci.csv"))) {
+
+            stream.forEach(line -> {
+                klienci.add(Reader.getKlient(line));
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 //        zamykanie okna
         WindowClosingListener windowClosingListener = new WindowClosingListener();
