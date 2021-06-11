@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /*
@@ -24,30 +26,33 @@ public class Main extends JFrame implements Runnable {
     private JMenu plik;
     private JMenuItem miWyloguj, miZamknij;
 
+    private Map<String, JLabel> componentJLabels;
+    private Map<String, JTextField> componentJTextField;
+    private Map<String, JButton> componentJButton;
 
-    private JLabel labelPrzywitanieKarta;
-    private JLabel labelPodajNrKarty;
-    private JLabel labelPodajPin;
-    private JLabel labelPrzywitanieInfoNrKarty;
-    private JLabel labelBledneDane;
-    private JLabel labelPowitaniePoImieniu;
-    private JLabel labelWyswietlanieSrodkow;
-    private JLabel labelWyplata;
-    private JLabel labelWplata;
+//    private JLabel labelPrzywitanieKarta;
+//    private JLabel labelPodajNrKarty;
+//    private JLabel labelPodajPin;
+//    private JLabel labelPrzywitanieInfoNrKarty;
+//    private JLabel labelBledneDane;
+//    private JLabel labelPowitaniePoImieniu;
+//    private JLabel labelWyswietlanieSrodkow;
+//    private JLabel labelWyplata;
+//    private JLabel labelWplata;
 
-    private JTextField textNumerKartyPole;
-    private JTextField textPinPole;
-    private JTextField textWyplacanePieniadze;
-    private JTextField textWplacanePieniadze;
+//    private JTextField textNumerKartyPole;
+//    private JTextField textPinPole;
+//    private JTextField textWyplacanePieniadze;
+//    private JTextField textWplacanePieniadze;
 
-    private JButton buttonPotwierdzenie;
-    private JButton buttonWyswietlSrodki;
-    private JButton buttonWyplacPieniadze;
-    private JButton buttonWplacPieniadze;
-    private JButton buttonWyloguj;
-    private JButton buttonWyplac;
-    private JButton buttonPowrot;
-    private JButton buttonPowrotPIN;
+//    private JButton buttonPotwierdzenie;
+//    private JButton buttonWyswietlSrodki;
+//    private JButton buttonWyplacPieniadze;
+//    private JButton buttonWplacPieniadze;
+//    private JButton buttonWyloguj;
+//    private JButton buttonWyplac;
+//    private JButton buttonPowrot;
+//    private JButton buttonPowrotPIN;
 
     private ImageIcon karta;
 
@@ -73,10 +78,12 @@ public class Main extends JFrame implements Runnable {
         setSize(new Dimension(640, 440));
         setLocation(dim.width / 4, dim.height / 4);
         setContentPane(new JPanel());
+        componentJLabels = new HashMap<>();
+        componentJTextField = new HashMap<>();
+        componentJButton = new HashMap<>();
+        klienci = new ArrayList<>();
 
 //        wczytanie kart
-//        klienci = Reader.getKlienci();
-        klienci = new ArrayList<>();
         try (Stream<String> stream = Files.lines(Paths.get("klienci.csv"))) {
 
             stream.forEach(line -> {
@@ -108,32 +115,54 @@ public class Main extends JFrame implements Runnable {
 
 //        elemety do paneli poczatkowych
         karta = new ImageIcon("citi-simplicity-300x194.png");
-        labelPrzywitanieKarta = new JLabel();
-        labelPrzywitanieKarta.setIcon(karta);
-        textNumerKartyPole = new JTextField(10);
-        textPinPole = new JTextField(4);
-        textWyplacanePieniadze = new JTextField();
-        buttonPotwierdzenie = new JButton("Potwierdź");
-        buttonWyplac = new JButton("Wypłać");
-        labelPodajNrKarty = new JLabel("Witamy w banku! Podaj swój numer karty płatniczej!");
-        labelPodajPin = new JLabel("Podaj PIN:");
-        labelBledneDane = new JLabel("Podałeś błędne dane!");
-        labelPrzywitanieInfoNrKarty = new JLabel();
-        labelWyplata = new JLabel();
-        labelWplata = new JLabel();
-        textWplacanePieniadze = new JTextField();
-        buttonWyplac = new JButton("Wpłać");
-        buttonPowrot = new JButton("Powrót");
-        buttonPowrotPIN = new JButton("Powrót");
+        componentJLabels.put("labelPrzywitanieKarta", new JLabel());
+        componentJLabels.get("labelPrzywitanieKarta").setIcon(karta);
+//        labelPrzywitanieKarta = new JLabel();
+//        labelPrzywitanieKarta.setIcon(karta);
+        componentJTextField.put("textNumerKartyPole", new JTextField(10));
+//        textNumerKartyPole = new JTextField(10);
+        componentJTextField.put("textPinPole", new JTextField(4));
+//        textPinPole = new JTextField(4);
+        componentJTextField.put("textWyplacanePieniadze", new JTextField());
+//        textWyplacanePieniadze = new JTextField();
+        componentJButton.put("buttonPotwierdzenie", new JButton("Potwierdź"));
+//        buttonPotwierdzenie = new JButton("Potwierdź");
+        componentJButton.put("buttonWyplac", new JButton("Wypłać"));
+//        buttonWyplac = new JButton("Wypłać");
+        componentJLabels.put("labelPodajNrKarty", new JLabel("Witamy w banku! Podaj swój numer karty płatniczej!"));
+//        labelPodajNrKarty = new JLabel("Witamy w banku! Podaj swój numer karty płatniczej!");
+        componentJLabels.put("labelPodajPin", new JLabel("Podaj PIN:"));
+//        labelPodajPin = new JLabel("Podaj PIN:");
+        componentJLabels.put("labelBledneDane", new JLabel("Podałeś błędne dane!"));
+//        labelBledneDane = new JLabel("Podałeś błędne dane!");
+        componentJLabels.put("labelPrzywitanieInfoNrKarty", new JLabel());
+//        labelPrzywitanieInfoNrKarty = new JLabel();
+        componentJLabels.put("labelWyplata", new JLabel());
+//        labelWyplata = new JLabel();
+        componentJLabels.put("labelWplata", new JLabel());
+//        labelWplata = new JLabel();
+        componentJTextField.put("textWplacanePieniadze", new JTextField());
+//        textWplacanePieniadze = new JTextField();
+//        componentJButton.put("buttonWyplac", new JButton("Wpłać"));
+        componentJButton.put("buttonPowrot", new JButton("Powrót"));
+//        buttonPowrot = new JButton("Powrót");
+        componentJButton.put("buttonPowrotPIN", new JButton("Powrót"));
+//        buttonPowrotPIN = new JButton("Powrót");
 
 
 //        elementy do panelu opcje
-        labelPowitaniePoImieniu = new JLabel("");
-        labelWyswietlanieSrodkow = new JLabel("");
-        buttonWyswietlSrodki = new JButton("Wyświetl środki");
-        buttonWyplacPieniadze = new JButton("Wypłać pieniądze");
-        buttonWplacPieniadze = new JButton("Wpłać pieniądze");
-        buttonWyloguj = new JButton("Wyloguj się");
+        componentJLabels.put("labelPowitaniePoImieniu", new JLabel());
+//        labelPowitaniePoImieniu = new JLabel("");
+        componentJLabels.put("labelWyswietlanieSrodkow", new JLabel());
+//        labelWyswietlanieSrodkow = new JLabel("");
+        componentJButton.put("buttonWyswietlSrodki", new JButton("Wyświetl środki"));
+//        buttonWyswietlSrodki = new JButton("Wyświetl środki");
+        componentJButton.put("buttonWyplacPieniadze", new JButton("Wypłać pieniądze"));
+//        buttonWyplacPieniadze = new JButton("Wypłać pieniądze");
+        componentJButton.put("buttonWplacPieniadze", new JButton("Wpłać pieniądze"));
+//        buttonWplacPieniadze = new JButton("Wpłać pieniądze");
+        componentJButton.put("buttonWyloguj", new JButton("Wyloguj się"));
+//        buttonWyloguj = new JButton("Wyloguj się");
 
 //        inicjowanie panelu
         panelAktywny = new JPanel();
@@ -144,11 +173,11 @@ public class Main extends JFrame implements Runnable {
 
         add(panelAktywny);
 
-        buttonPotwierdzenie.addActionListener(new ActionListener() {
+        componentJButton.get("buttonPotwierdzenie").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (numerAktywnegoPanelu == 1) {
-                    aktywnaKarta = KartaPlatnicza.czyNumerKartyZgadzaSie(textNumerKartyPole.getText(), klienci);
+                    aktywnaKarta = KartaPlatnicza.czyNumerKartyZgadzaSie(componentJTextField.get("textNumerKartyPole").getText(), klienci);
 
 
 //                  gdy uzytkownik podal błędny nr karty
@@ -162,10 +191,10 @@ public class Main extends JFrame implements Runnable {
                     changePanel(2);
 
                 } else if (numerAktywnegoPanelu == 2) {
-                    if (textPinPole.getText().length() == 0) return;
+                    if (componentJTextField.get("textPinPole").getText().length() == 0) return;
 
 //                  gdy użytkownik podał poprawny kod PIN
-                    if (klienci.get(aktywnaKarta).getPIN() == Short.parseShort(textPinPole.getText())) {
+                    if (klienci.get(aktywnaKarta).getPIN() == Short.parseShort(componentJTextField.get("textPinPole").getText())) {
                         changePanel(3);
                         return;
                     }
@@ -178,8 +207,8 @@ public class Main extends JFrame implements Runnable {
                     changePanel(1);
                 } else if (numerAktywnegoPanelu == 5) {
                     try {
-                        klienci.get(aktywnaKarta).wyplacPieniadze(Float.parseFloat(textWyplacanePieniadze.getText()));
-                        JOptionPane.showMessageDialog(null, String.format("Wypłacono %szł", textWyplacanePieniadze.getText()), "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
+                        klienci.get(aktywnaKarta).wyplacPieniadze(Float.parseFloat(componentJTextField.get("textWyplacanePieniadze").getText()));
+                        JOptionPane.showMessageDialog(null, String.format("Wypłacono %szł", componentJTextField.get("textWyplacanePieniadze").getText()), "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
 //                        JOptionPane.showMessageDialog(null, "Trwa nawiązywanie połączenia...", "Informacja", JOptionPane.INFORMATION_MESSAGE);
 //                        JOptionPane.showMessageDialog(null, "Trwa wypłacanie gotówki...", "Informacja", JOptionPane.INFORMATION_MESSAGE);
 //                        JOptionPane.showMessageDialog(null, "Transakcja zakończona pomyślnie.", "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
@@ -198,7 +227,7 @@ public class Main extends JFrame implements Runnable {
                 }
                 else if (numerAktywnegoPanelu == 6) {
                     try {
-                        String kwotaWplaty = klienci.get(aktywnaKarta).doliczSrodki(Float.parseFloat(textWplacanePieniadze.getText()));
+                        String kwotaWplaty = klienci.get(aktywnaKarta).doliczSrodki(Float.parseFloat(componentJTextField.get("textWplacanePieniadze").getText()));
                         JOptionPane.showMessageDialog(null, kwotaWplaty, "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
 //                        JOptionPane.showMessageDialog(null, "Trwa nawiązywanie połączenia...", "Informacja", JOptionPane.INFORMATION_MESSAGE);
 //                        JOptionPane.showMessageDialog(null, "Oczekiwanie na wpłatę gotówki...", "Informacja", JOptionPane.INFORMATION_MESSAGE);
@@ -218,42 +247,42 @@ public class Main extends JFrame implements Runnable {
             }
         });
 
-        buttonPowrot.addActionListener(new ActionListener() {
+        componentJButton.get("buttonPowrot").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changePanel(3);
             }
         });
 
-        buttonPowrotPIN.addActionListener(new ActionListener() {
+        componentJButton.get("buttonPowrotPIN").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changePanel(1);
             }
         });
 
-        buttonWyswietlSrodki.addActionListener(new ActionListener() {
+        componentJButton.get("buttonWyswietlSrodki").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { changePanel(4); }
         });
 
-        buttonWyplacPieniadze.addActionListener(new ActionListener() {
+        componentJButton.get("buttonWyplacPieniadze").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { changePanel(5); }
         });
 
-        buttonWplacPieniadze.addActionListener(new ActionListener() {
+        componentJButton.get("buttonWplacPieniadze").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { changePanel(6); }
         });
 
-        buttonWyloguj.addActionListener(new ActionListener() {
+        componentJButton.get("buttonWyloguj").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changePanel(1);
 
-                textNumerKartyPole.setText("");
-                textPinPole.setText("");}
+                componentJTextField.get("textNumerKartyPole").setText("");
+                componentJTextField.get("textPinPole").setText("");}
         });
     }
 
@@ -268,7 +297,7 @@ public class Main extends JFrame implements Runnable {
     private void changePanel(int stage) { changePanel(stage, null); }
 
     private void changePanel(int stage, String err) {
-        panelAktywny.remove(labelBledneDane);
+        panelAktywny.remove(componentJLabels.get("labelBledneDane"));
         /*
             stage:
             1 (default): panel do podania nr karty
@@ -281,88 +310,88 @@ public class Main extends JFrame implements Runnable {
         if (stage == 2) {
             numerAktywnegoPanelu = 2;
 
-            panelAktywny.remove(labelPodajNrKarty);
-            panelAktywny.remove(textNumerKartyPole);
-            panelAktywny.remove(labelBledneDane);
-            panelAktywny.remove(labelPodajNrKarty);
-            panelAktywny.remove(textNumerKartyPole);
-            panelAktywny.remove(labelBledneDane);
+            panelAktywny.remove(componentJLabels.get("labelPodajNrKarty"));
+            panelAktywny.remove(componentJTextField.get("textNumerKartyPole"));
+            panelAktywny.remove(componentJLabels.get("labelBledneDane"));
+            panelAktywny.remove(componentJLabels.get("labelPodajNrKarty"));
+            panelAktywny.remove(componentJTextField.get("textNumerKartyPole"));
+            panelAktywny.remove(componentJLabels.get("labelBledneDane"));
 
 
-            labelPrzywitanieInfoNrKarty = new JLabel(String.format("Numer karty: %s", textNumerKartyPole.getText()));
-            panelAktywny.add(labelPrzywitanieInfoNrKarty);
-            panelAktywny.add(labelPodajPin);
-            panelAktywny.add(textPinPole);
+            componentJLabels.put("labelPrzywitanieInfoNrKarty", new JLabel(String.format("Numer karty: %s", componentJTextField.get("textNumerKartyPole").getText())));
+            panelAktywny.add(componentJLabels.get("labelPrzywitanieInfoNrKarty"));
+            panelAktywny.add(componentJLabels.get("labelPodajPin"));
+            panelAktywny.add(componentJTextField.get("textPinPole"));
 
-            panelAktywny.add(buttonPotwierdzenie);
-            panelAktywny.add(buttonPowrotPIN);
+            panelAktywny.add(componentJButton.get("buttonPotwierdzenie"));
+            panelAktywny.add(componentJButton.get("buttonPowrotPIN"));
         } else if (stage == 3) {
             numerAktywnegoPanelu = 3;
 
-            panelAktywny.remove(labelPrzywitanieKarta);
-            panelAktywny.remove(labelPrzywitanieInfoNrKarty);
-            panelAktywny.remove(labelPodajPin);
-            panelAktywny.remove(textPinPole);
-            panelAktywny.remove(buttonPotwierdzenie);
-            panelAktywny.remove(labelWyswietlanieSrodkow);
-            panelAktywny.remove(labelWyplata);
-            panelAktywny.remove(textWyplacanePieniadze);
-            panelAktywny.remove(labelWplata);
-            panelAktywny.remove(textWplacanePieniadze);
-            panelAktywny.remove(buttonPowrot);
-            panelAktywny.remove(buttonPowrotPIN);
+            panelAktywny.remove(componentJLabels.get("labelPrzywitanieKarta"));
+            panelAktywny.remove(componentJLabels.get("labelPrzywitanieInfoNrKarty"));
+            panelAktywny.remove(componentJLabels.get("labelPodajPin"));
+            panelAktywny.remove(componentJTextField.get("textPinPole"));
+            panelAktywny.remove(componentJButton.get("buttonPotwierdzenie"));
+            panelAktywny.remove(componentJLabels.get("labelWyswietlanieSrodkow"));
+            panelAktywny.remove(componentJLabels.get("labelWyplata"));
+            panelAktywny.remove(componentJTextField.get("textWyplacanePieniadze"));
+            panelAktywny.remove(componentJLabels.get("labelWplata"));
+            panelAktywny.remove(componentJTextField.get("textWplacanePieniadze"));
+            panelAktywny.remove(componentJButton.get("buttonPowrot"));
+            panelAktywny.remove(componentJButton.get("buttonPowrotPIN"));
 
-            labelPowitaniePoImieniu = new JLabel(
-                    String.format("Sz. P. %s %s", klienci.get(aktywnaKarta).getImie(), klienci.get(aktywnaKarta).getNazwisko()));
-            panelAktywny.add(labelPowitaniePoImieniu);
-            panelAktywny.add(buttonWyswietlSrodki);
-            panelAktywny.add(buttonWyplacPieniadze);
-            panelAktywny.add(buttonWplacPieniadze);
-            panelAktywny.add(buttonWyloguj);
+            componentJLabels.put("labelPowitaniePoImieniu", new JLabel(
+                    String.format("Sz. P. %s %s", klienci.get(aktywnaKarta).getImie(), klienci.get(aktywnaKarta).getNazwisko())));
+            panelAktywny.add(componentJLabels.get("labelPowitaniePoImieniu"));
+            panelAktywny.add(componentJButton.get("buttonWyswietlSrodki"));
+            panelAktywny.add(componentJButton.get("buttonWyplacPieniadze"));
+            panelAktywny.add(componentJButton.get("buttonWplacPieniadze"));
+            panelAktywny.add(componentJButton.get("buttonWyloguj"));
 
         } else if (stage == 4) {
             numerAktywnegoPanelu = 4;
 
-            panelAktywny.remove(labelPowitaniePoImieniu);
-            panelAktywny.remove(buttonWyswietlSrodki);
-            panelAktywny.remove(buttonWyplacPieniadze);
-            panelAktywny.remove(buttonWplacPieniadze);
-            panelAktywny.remove(buttonWyloguj);
-            labelWyswietlanieSrodkow = new JLabel(
-                    String.format("Masz %.2f pieniędzy na koncie!", klienci.get(aktywnaKarta).srodki));
-            panelAktywny.add(labelWyswietlanieSrodkow);
+            panelAktywny.remove(componentJLabels.get("labelPowitaniePoImieniu"));
+            panelAktywny.remove(componentJButton.get("buttonWyswietlSrodki"));
+            panelAktywny.remove(componentJButton.get("buttonWyplacPieniadze"));
+            panelAktywny.remove(componentJButton.get("buttonWplacPieniadze"));
+            panelAktywny.remove(componentJButton.get("buttonWyloguj"));
+            componentJLabels.put("labelWyswietlanieSrodkow", new JLabel(
+                    String.format("Masz %.2f pieniędzy na koncie!", klienci.get(aktywnaKarta).srodki)));
+            panelAktywny.add(componentJLabels.get("labelWyswietlanieSrodkow"));
             //panelAktywny.add(buttonPotwierdzenie);
-            panelAktywny.add(buttonPowrot);
+            panelAktywny.add(componentJButton.get("buttonPowrot"));
 
         } else if (stage == 5) {
             numerAktywnegoPanelu = 5;
 
-            panelAktywny.remove(labelPowitaniePoImieniu);
-            panelAktywny.remove(buttonWyswietlSrodki);
-            panelAktywny.remove(buttonWyplacPieniadze);
-            panelAktywny.remove(buttonWplacPieniadze);
-            panelAktywny.remove(buttonWyloguj);
-            labelWyplata = new JLabel(
-                    String.format("Ile chcesz wypłacić pieniędzy:"));
-            textWyplacanePieniadze = new JTextField();
-            buttonWyplac = new JButton("Wypłać");
+            panelAktywny.remove(componentJLabels.get("labelPowitaniePoImieniu"));
+            panelAktywny.remove(componentJButton.get("buttonWyswietlSrodki"));
+            panelAktywny.remove(componentJButton.get("buttonWyplacPieniadze"));
+            panelAktywny.remove(componentJButton.get("buttonWplacPieniadze"));
+            panelAktywny.remove(componentJButton.get("buttonWyloguj"));
+            componentJLabels.put("labelWyplata", new JLabel(
+                    String.format("Ile chcesz wypłacić pieniędzy:")));
+            componentJTextField.put("textWyplacanePieniadze", new JTextField());
+            componentJButton.put("buttonWyplac", new JButton("Wypłać"));
 //            buttonWyplac.addActionListener(klienci.get(aktywnaKarta).wyplacPieniadze(Float.parseFloat(textWyplacanePieniadze.getText())));
-            panelAktywny.add(labelWyplata);
-            panelAktywny.add(textWyplacanePieniadze);
-            panelAktywny.add(buttonPotwierdzenie);
-            panelAktywny.add(buttonPowrot);
+            panelAktywny.add(componentJLabels.get("labelWyplata"));
+            panelAktywny.add(componentJTextField.get("textWyplacanePieniadze"));
+            panelAktywny.add(componentJButton.get("buttonPotwierdzenie"));
+            panelAktywny.add(componentJButton.get("buttonPowrot"));
 
         } else if (stage == 6) {
             numerAktywnegoPanelu = 6;
 
-            panelAktywny.remove(labelPowitaniePoImieniu);
-            panelAktywny.remove(buttonWyswietlSrodki);
-            panelAktywny.remove(buttonWyplacPieniadze);
-            panelAktywny.remove(buttonWplacPieniadze);
-            panelAktywny.remove(buttonWyloguj);
-            labelWplata = new JLabel(
-                    String.format("Ile chcesz wpłacić pieniędzy:"));
-            textWplacanePieniadze = new JTextField();
+            panelAktywny.remove(componentJLabels.get("labelPowitaniePoImieniu"));
+            panelAktywny.remove(componentJButton.get("buttonWyswietlSrodki"));
+            panelAktywny.remove(componentJButton.get("buttonWyplacPieniadze"));
+            panelAktywny.remove(componentJButton.get("buttonWplacPieniadze"));
+            panelAktywny.remove(componentJButton.get("buttonWyloguj"));
+            componentJLabels.put("labelWplata", new JLabel(
+                    String.format("Ile chcesz wpłacić pieniędzy:")));
+            componentJTextField.put("textWplacanePieniadze", new JTextField());
 
             /*if(textWplacanePieniadze.getText()=="")
             {
@@ -372,41 +401,41 @@ public class Main extends JFrame implements Runnable {
                         panelAktywny.getWindow().WARNING_MESSAGE);
             }*/
 
-            buttonWyplac = new JButton("Wpłać");
-            panelAktywny.add(labelWplata);
-            panelAktywny.add(textWplacanePieniadze);
-            panelAktywny.add(buttonPotwierdzenie);
-            panelAktywny.add(buttonPowrot);
+            componentJButton.put("buttonWyplac", new JButton("Wpłać"));
+            panelAktywny.add(componentJLabels.get("labelWplata"));
+            panelAktywny.add(componentJTextField.get("textWplacanePieniadze"));
+            panelAktywny.add(componentJButton.get("buttonPotwierdzenie"));
+            panelAktywny.add(componentJButton.get("buttonPowrot"));
 
         } else {
             numerAktywnegoPanelu = 1;
 
-            panelAktywny.remove(labelPrzywitanieInfoNrKarty);
-            panelAktywny.remove(labelPodajPin);
-            panelAktywny.remove(textPinPole);
+            panelAktywny.remove(componentJLabels.get("labelPrzywitanieInfoNrKarty"));
+            panelAktywny.remove(componentJLabels.get("labelPodajPin"));
+            panelAktywny.remove(componentJTextField.get("textPinPole"));
 
-            panelAktywny.remove(labelPowitaniePoImieniu);
-            panelAktywny.remove(buttonWyswietlSrodki);
-            panelAktywny.remove(buttonWyplacPieniadze);
-            panelAktywny.remove(buttonWplacPieniadze);
-            panelAktywny.remove(buttonWyloguj);
-            panelAktywny.remove(buttonPowrotPIN);
+            panelAktywny.remove(componentJLabels.get("labelPowitaniePoImieniu"));
+            panelAktywny.remove(componentJButton.get("buttonWyswietlSrodki"));
+            panelAktywny.remove(componentJButton.get("buttonWyplacPieniadze"));
+            panelAktywny.remove(componentJButton.get("buttonWplacPieniadze"));
+            panelAktywny.remove(componentJButton.get("buttonWyloguj"));
+            panelAktywny.remove(componentJButton.get("buttonPowrotPIN"));
 
-            panelAktywny.remove(labelWyswietlanieSrodkow);
-            panelAktywny.remove(labelWyplata);
-            panelAktywny.remove(textWyplacanePieniadze);
-            panelAktywny.remove(labelWplata);
-            panelAktywny.remove(textWplacanePieniadze);
+            panelAktywny.remove(componentJLabels.get("labelWyswietlanieSrodkow"));
+            panelAktywny.remove(componentJLabels.get("labelWyplata"));
+            panelAktywny.remove(componentJTextField.get("textWyplacanePieniadze"));
+            panelAktywny.remove(componentJLabels.get("labelWplata"));
+            panelAktywny.remove(componentJTextField.get("textWplacanePieniadze"));
 
-            panelAktywny.add(labelPrzywitanieKarta);
+            panelAktywny.add(componentJLabels.get("labelPrzywitanieKarta"));
             if (err != null) {
-                labelBledneDane = new JLabel(err);
-                panelAktywny.add(labelBledneDane);
+                componentJLabels.put("labelBledneDane", new JLabel(err));
+                panelAktywny.add(componentJLabels.get("labelBledneDane"));
             }
-            panelAktywny.add(labelPodajNrKarty);
-            panelAktywny.add(textNumerKartyPole);
+            panelAktywny.add(componentJLabels.get("labelPodajNrKarty"));
+            panelAktywny.add(componentJTextField.get("textNumerKartyPole"));
 
-            panelAktywny.add(buttonPotwierdzenie);
+            panelAktywny.add(componentJButton.get("buttonPotwierdzenie"));
         }
         SwingUtilities.updateComponentTreeUI(panelAktywny);
     }
@@ -452,8 +481,8 @@ public class Main extends JFrame implements Runnable {
         public void actionPerformed(ActionEvent e) {
             changePanel(1);
 
-            textNumerKartyPole.setText("");
-            textPinPole.setText("");
+            componentJTextField.get("textNumerKartyPole").setText("");
+            componentJTextField.get("textPinPole").setText("");
 
         }
     }
