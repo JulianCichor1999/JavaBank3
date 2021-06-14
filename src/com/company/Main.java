@@ -14,12 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-/*
-to do
-okno potwierdzenia zamkniecia - gdy nacisnie sie nie -> zamyka okno
-dodac akcje do przyciskow opcje
-
- */
 
 public class Main extends JFrame implements Runnable {
     private JMenuBar menuGlowne;
@@ -38,9 +32,6 @@ public class Main extends JFrame implements Runnable {
 
     ArrayList<KartaPlatnicza> klienci;
     int aktywnaKarta = -1;
-//    KartaPlatnicza kartaPlatnicza;
-
-
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Main("Bank"));
@@ -311,7 +302,6 @@ public class Main extends JFrame implements Runnable {
             componentJLabels.put("labelWyswietlanieSrodkow", new JLabel(
                     String.format("Masz %.2f pieniędzy na koncie!", klienci.get(aktywnaKarta).srodki)));
             panelAktywny.add(componentJLabels.get("labelWyswietlanieSrodkow"));
-            //panelAktywny.add(buttonPotwierdzenie);
             panelAktywny.add(componentJButton.get("buttonPowrot"));
 
         } else if (stage == 5) {
