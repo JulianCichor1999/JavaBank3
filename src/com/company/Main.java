@@ -143,7 +143,7 @@ public class Main extends JFrame implements Runnable {
                     if (componentJTextField.get("textPinPole").getText().length() == 0) return;
 
 //                  gdy użytkownik podał poprawny kod PIN
-                    if (klienci.get(aktywnaKarta).getPIN() == Short.parseShort(componentJTextField.get("textPinPole").getText())) {
+                    if (klienci.get(aktywnaKarta).getPin() == Short.parseShort(componentJTextField.get("textPinPole").getText())) {
                         changePanel(3);
                         return;
                     }
@@ -157,15 +157,13 @@ public class Main extends JFrame implements Runnable {
                     try {
                         klienci.get(aktywnaKarta).wyplacPieniadze(Float.parseFloat(componentJTextField.get("textWyplacanePieniadze").getText()));
                         JOptionPane.showMessageDialog(null, String.format("Wypłacono %szł", componentJTextField.get("textWyplacanePieniadze").getText()), "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
-                        //Info o zakończeniu wypłaty pasuje jeszcze troszki poprawić
 
                     } catch (NiewystarczajaceSrodkiException niewystarczajaceSrodkiException) {
-                        niewystarczajaceSrodkiException.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Nie masz wystarczających środków na koncie!", "Brak środków", JOptionPane.INFORMATION_MESSAGE);
                     } catch (ZeroWyplataException zeroWyplataException) {
-                        zeroWyplataException.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Nie możesz wypłacić zero złotych!", "Zero złotych wypłata", JOptionPane.INFORMATION_MESSAGE);
                     } catch (NumberFormatException err) {
-                        JOptionPane.showMessageDialog(null, "Wprowadziłeś niepoprawne dane!", "Informacja", JOptionPane.ERROR_MESSAGE);
-                        System.out.println(err.toString());
+                        JOptionPane.showMessageDialog(null, "Wprowadziłeś niepoprawne dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     changePanel(3);
@@ -174,7 +172,6 @@ public class Main extends JFrame implements Runnable {
                     try {
                         String kwotaWplaty = klienci.get(aktywnaKarta).doliczSrodki(Float.parseFloat(componentJTextField.get("textWplacanePieniadze").getText()));
                         JOptionPane.showMessageDialog(null, kwotaWplaty, "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
-                        //Info o zakończeniu wpłaty też pasuje jeszcze troszki poprawić
                     } catch (NumberFormatException err) {
                         JOptionPane.showMessageDialog(null, "Wprowadziłeś niepoprawne dane!", "Informacja", JOptionPane.ERROR_MESSAGE);
                         System.out.println(err.toString());

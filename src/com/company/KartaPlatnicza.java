@@ -1,31 +1,26 @@
 package com.company;
 
-import java.util.ArrayList;
-
 public class KartaPlatnicza extends KartaPlatniczaAbstract {
     private final long numerKarty;
-    private final short PIN;
+    private final short pin;
     protected double srodki;
     private Producenci producentKarty;
 
-    public KartaPlatnicza(String imie, String nazwisko, long numerKarty, short PIN, double srodki) {
+    public KartaPlatnicza(String imie, String nazwisko, long numerKarty, short pin, double srodki) {
         super(imie, nazwisko);
         this.numerKarty = numerKarty;
-        this.PIN = PIN;
+        this.pin = pin;
         this.srodki = srodki;
     }
 
-    public KartaPlatnicza(String imie, String nazwisko, String numerKarty, short PIN, double srodki) {
-        super(imie, nazwisko);
-        this.numerKarty = Long.parseLong(numerKarty);
-        this.PIN = PIN;
-        this.srodki = srodki;
+    public KartaPlatnicza(String imie, String nazwisko, String numerKarty, short pin, double srodki) {
+        this(imie, nazwisko, Long.parseLong(numerKarty), pin, srodki);
     }
 
     public KartaPlatnicza() {
         super(null, null);
         this.numerKarty = -1;
-        this.PIN = -1;
+        this.pin = -1;
         this.srodki = -1;
     }
 
@@ -33,8 +28,8 @@ public class KartaPlatnicza extends KartaPlatniczaAbstract {
         return String.format("%16d", numerKarty).replaceAll("\\s", "0");
     }
 
-    public short getPIN() {
-        return PIN;
+    public short getPin() {
+        return pin;
     }
 
     public double getSrodki() {
@@ -68,6 +63,6 @@ public class KartaPlatnicza extends KartaPlatniczaAbstract {
     @Override
     public String toString() {
         return String.format("%s %s, %s, %d, %.2f, %s",
-                getImie(), getNazwisko(), getNumerKarty(), getPIN(), getSrodki(), getProducentKarty());
+                getImie(), getNazwisko(), getNumerKarty(), getPin(), getSrodki(), getProducentKarty());
     }
 }

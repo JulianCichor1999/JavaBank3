@@ -12,10 +12,10 @@ public class Tester {
         if (jestKarta) {
             if (kp.getProducentKarty().toString().equals("visa")) {
                 kartaPlatnicza = new KartaPlatniczaVisa(
-                        kp.getImie(), kp.getNazwisko(), kp.getNumerKarty(), kp.getPIN(), kp.getSrodki());
+                        kp.getImie(), kp.getNazwisko(), kp.getNumerKarty(), kp.getPin(), kp.getSrodki());
             } else if (kp.getProducentKarty().toString().equals("mastercard")) {
                 kartaPlatnicza = new KartaPlatniczaMastercard(
-                        kp.getImie(), kp.getNazwisko(), kp.getNumerKarty(), kp.getPIN(), kp.getSrodki());
+                        kp.getImie(), kp.getNazwisko(), kp.getNumerKarty(), kp.getPin(), kp.getSrodki());
             }
             return id;
         }

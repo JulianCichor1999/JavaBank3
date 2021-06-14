@@ -43,10 +43,10 @@ public class Reader {
                 if (jestKarta) {
                     if (kp.getProducentKarty().toString().equals("visa")) {
                         kartaPlatnicza = new KartaPlatniczaVisa(
-                                kp.getImie(), kp.getNazwisko(), kp.getNumerKarty(), kp.getPIN(), kp.getSrodki());
+                                kp.getImie(), kp.getNazwisko(), kp.getNumerKarty(), kp.getPin(), kp.getSrodki());
                     } else if (kp.getProducentKarty().toString().equals("mastercard")) {
                         kartaPlatnicza = new KartaPlatniczaMastercard(
-                                kp.getImie(), kp.getNazwisko(), kp.getNumerKarty(), kp.getPIN(), kp.getSrodki());
+                                kp.getImie(), kp.getNazwisko(), kp.getNumerKarty(), kp.getPin(), kp.getSrodki());
                     }
                     break;
                 }
@@ -63,7 +63,7 @@ public class Reader {
 //                System.out.println("Podaj 4 cyfrowy kod pin!");
             }
 
-            if (kartaPlatnicza.getPIN() == pin) break;
+            if (kartaPlatnicza.getPin() == pin) break;
             System.out.println("Błędny kod pin!");
         }
 
@@ -77,7 +77,7 @@ public class Reader {
             for (KartaPlatnicza klient : klienci) {
                 String srodki = String.format("%.2f", klient.getSrodki()).replace(",", ".");
                 plik.write(String.format("%s,%s,%s,%d,%s,%s\n",
-                        klient.getImie(), klient.getNazwisko(), klient.getNumerKarty(), klient.getPIN(),
+                        klient.getImie(), klient.getNazwisko(), klient.getNumerKarty(), klient.getPin(),
                         srodki, klient.getProducentKarty().toString()));
             }
             plik.close();
