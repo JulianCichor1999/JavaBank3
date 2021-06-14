@@ -30,30 +30,6 @@ public class Main extends JFrame implements Runnable {
     private Map<String, JTextField> componentJTextField;
     private Map<String, JButton> componentJButton;
 
-//    private JLabel labelPrzywitanieKarta;
-//    private JLabel labelPodajNrKarty;
-//    private JLabel labelPodajPin;
-//    private JLabel labelPrzywitanieInfoNrKarty;
-//    private JLabel labelBledneDane;
-//    private JLabel labelPowitaniePoImieniu;
-//    private JLabel labelWyswietlanieSrodkow;
-//    private JLabel labelWyplata;
-//    private JLabel labelWplata;
-
-//    private JTextField textNumerKartyPole;
-//    private JTextField textPinPole;
-//    private JTextField textWyplacanePieniadze;
-//    private JTextField textWplacanePieniadze;
-
-//    private JButton buttonPotwierdzenie;
-//    private JButton buttonWyswietlSrodki;
-//    private JButton buttonWyplacPieniadze;
-//    private JButton buttonWplacPieniadze;
-//    private JButton buttonWyloguj;
-//    private JButton buttonWyplac;
-//    private JButton buttonPowrot;
-//    private JButton buttonPowrotPIN;
-
     private ImageIcon karta;
 
 
@@ -117,52 +93,35 @@ public class Main extends JFrame implements Runnable {
         karta = new ImageIcon("citi-simplicity-300x194.png");
         componentJLabels.put("labelPrzywitanieKarta", new JLabel());
         componentJLabels.get("labelPrzywitanieKarta").setIcon(karta);
-//        labelPrzywitanieKarta = new JLabel();
-//        labelPrzywitanieKarta.setIcon(karta);
+
         componentJTextField.put("textNumerKartyPole", new JTextField(10));
-//        textNumerKartyPole = new JTextField(10);
         componentJTextField.put("textPinPole", new JTextField(4));
-//        textPinPole = new JTextField(4);
         componentJTextField.put("textWyplacanePieniadze", new JTextField());
-//        textWyplacanePieniadze = new JTextField();
+
         componentJButton.put("buttonPotwierdzenie", new JButton("Potwierdź"));
-//        buttonPotwierdzenie = new JButton("Potwierdź");
         componentJButton.put("buttonWyplac", new JButton("Wypłać"));
-//        buttonWyplac = new JButton("Wypłać");
+
         componentJLabels.put("labelPodajNrKarty", new JLabel("Witamy w banku! Podaj swój numer karty płatniczej!"));
-//        labelPodajNrKarty = new JLabel("Witamy w banku! Podaj swój numer karty płatniczej!");
         componentJLabels.put("labelPodajPin", new JLabel("Podaj PIN:"));
-//        labelPodajPin = new JLabel("Podaj PIN:");
         componentJLabels.put("labelBledneDane", new JLabel("Podałeś błędne dane!"));
-//        labelBledneDane = new JLabel("Podałeś błędne dane!");
         componentJLabels.put("labelPrzywitanieInfoNrKarty", new JLabel());
-//        labelPrzywitanieInfoNrKarty = new JLabel();
         componentJLabels.put("labelWyplata", new JLabel());
-//        labelWyplata = new JLabel();
         componentJLabels.put("labelWplata", new JLabel());
-//        labelWplata = new JLabel();
+
         componentJTextField.put("textWplacanePieniadze", new JTextField());
-//        textWplacanePieniadze = new JTextField();
-//        componentJButton.put("buttonWyplac", new JButton("Wpłać"));
+
         componentJButton.put("buttonPowrot", new JButton("Powrót"));
-//        buttonPowrot = new JButton("Powrót");
         componentJButton.put("buttonPowrotPIN", new JButton("Powrót"));
-//        buttonPowrotPIN = new JButton("Powrót");
 
 
 //        elementy do panelu opcje
         componentJLabels.put("labelPowitaniePoImieniu", new JLabel());
-//        labelPowitaniePoImieniu = new JLabel("");
         componentJLabels.put("labelWyswietlanieSrodkow", new JLabel());
-//        labelWyswietlanieSrodkow = new JLabel("");
+
         componentJButton.put("buttonWyswietlSrodki", new JButton("Wyświetl środki"));
-//        buttonWyswietlSrodki = new JButton("Wyświetl środki");
         componentJButton.put("buttonWyplacPieniadze", new JButton("Wypłać pieniądze"));
-//        buttonWyplacPieniadze = new JButton("Wypłać pieniądze");
         componentJButton.put("buttonWplacPieniadze", new JButton("Wpłać pieniądze"));
-//        buttonWplacPieniadze = new JButton("Wpłać pieniądze");
         componentJButton.put("buttonWyloguj", new JButton("Wyloguj się"));
-//        buttonWyloguj = new JButton("Wyloguj się");
 
 //        inicjowanie panelu
         panelAktywny = new JPanel();
@@ -183,7 +142,6 @@ public class Main extends JFrame implements Runnable {
 //                  gdy uzytkownik podal błędny nr karty
                     if (aktywnaKarta == -1) {
                         JOptionPane.showMessageDialog(null, "Nie znaleziono karty o podanym numerze w naszym banku.", "Brak karty", JOptionPane.ERROR_MESSAGE);
-                        //changePanel(1, "Nie ma takiej karty w bazie!");
                         return;
                     }
 
@@ -200,7 +158,6 @@ public class Main extends JFrame implements Runnable {
                     }
 
 //                  gdy uzytkownik podal bledny PIN
-                    //changePanel(1, "Podałeś błędny PIN!");
                     JOptionPane.showMessageDialog(null, "Wprowadzono niepoprawny numer PIN.", "Błąd uwierzytelnienia", JOptionPane.ERROR_MESSAGE);
                 }
                 else if (numerAktywnegoPanelu == 3) {
@@ -209,9 +166,6 @@ public class Main extends JFrame implements Runnable {
                     try {
                         klienci.get(aktywnaKarta).wyplacPieniadze(Float.parseFloat(componentJTextField.get("textWyplacanePieniadze").getText()));
                         JOptionPane.showMessageDialog(null, String.format("Wypłacono %szł", componentJTextField.get("textWyplacanePieniadze").getText()), "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
-//                        JOptionPane.showMessageDialog(null, "Trwa nawiązywanie połączenia...", "Informacja", JOptionPane.INFORMATION_MESSAGE);
-//                        JOptionPane.showMessageDialog(null, "Trwa wypłacanie gotówki...", "Informacja", JOptionPane.INFORMATION_MESSAGE);
-//                        JOptionPane.showMessageDialog(null, "Transakcja zakończona pomyślnie.", "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
                         //Info o zakończeniu wypłaty pasuje jeszcze troszki poprawić
 
                     } catch (NiewystarczajaceSrodkiException niewystarczajaceSrodkiException) {
@@ -229,9 +183,6 @@ public class Main extends JFrame implements Runnable {
                     try {
                         String kwotaWplaty = klienci.get(aktywnaKarta).doliczSrodki(Float.parseFloat(componentJTextField.get("textWplacanePieniadze").getText()));
                         JOptionPane.showMessageDialog(null, kwotaWplaty, "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
-//                        JOptionPane.showMessageDialog(null, "Trwa nawiązywanie połączenia...", "Informacja", JOptionPane.INFORMATION_MESSAGE);
-//                        JOptionPane.showMessageDialog(null, "Oczekiwanie na wpłatę gotówki...", "Informacja", JOptionPane.INFORMATION_MESSAGE);
-//                        JOptionPane.showMessageDialog(null, "Transakcja zakończona pomyślnie.", "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
                         //Info o zakończeniu wpłaty też pasuje jeszcze troszki poprawić
                     } catch (NumberFormatException err) {
                         JOptionPane.showMessageDialog(null, "Wprowadziłeś niepoprawne dane!", "Informacja", JOptionPane.ERROR_MESSAGE);
@@ -392,14 +343,6 @@ public class Main extends JFrame implements Runnable {
             componentJLabels.put("labelWplata", new JLabel(
                     String.format("Ile chcesz wpłacić pieniędzy:")));
             componentJTextField.put("textWplacanePieniadze", new JTextField());
-
-            /*if(textWplacanePieniadze.getText()=="")
-            {
-                JOptionPane.showMessageDialog(null,
-                        "Eggs are not supposed to be green.",
-                        "Inane warning",
-                        panelAktywny.getWindow().WARNING_MESSAGE);
-            }*/
 
             componentJButton.put("buttonWyplac", new JButton("Wpłać"));
             panelAktywny.add(componentJLabels.get("labelWplata"));
