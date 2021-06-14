@@ -13,7 +13,6 @@ public class KartaPlatniczaVisa extends KartaPlatnicza implements Transakcja{
     }
 
     public String doliczSrodki(double noweSrodki) {
-        System.out.println(Polaczenie);
         wplacanie();
         noweSrodki *= 1.05;
         srodki += noweSrodki;
