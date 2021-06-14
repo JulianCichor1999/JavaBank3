@@ -127,7 +127,7 @@ public class Main extends JFrame implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (numerAktywnegoPanelu == 1) {
-                    aktywnaKarta = KartaPlatnicza.czyNumerKartyZgadzaSie(componentJTextField.get("textNumerKartyPole").getText(), klienci);
+                    aktywnaKarta = Tester.czyNumerKartyZgadzaSie(componentJTextField.get("textNumerKartyPole").getText(), klienci);
 
 
 //                  gdy uzytkownik podal błędny nr karty
