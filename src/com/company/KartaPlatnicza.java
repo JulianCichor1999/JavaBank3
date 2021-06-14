@@ -55,15 +55,12 @@ public class KartaPlatnicza extends KartaPlatniczaAbstract {
         } else if (wyplacanaKwota == 0) {
             throw new ZeroWyplataException();
         } else {
-            System.out.println(Polaczenie);
             wyplacanie();
-            System.out.printf("Wypłacono %.2f pieniędzy z konta!\n", wyplacanaKwota);
             srodki -= wyplacanaKwota;
         }
     }
 
     public String doliczSrodki(double noweSrodki) {
-        System.out.println(Polaczenie);
         srodki += noweSrodki;
         return String.format("Wpłacono %.2f pieniędzy do konta\n", noweSrodki);
     }
