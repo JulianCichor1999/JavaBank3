@@ -49,10 +49,6 @@ public class KartaPlatnicza extends KartaPlatniczaAbstract {
         this.producentKarty = producentKarty;
     }
 
-    public void wyswietlBalans() {
-        System.out.printf("Masz %.2f pieniędzy na koncie!\n", srodki);
-    }
-
     public void wyplacPieniadze(double wyplacanaKwota) throws NiewystarczajaceSrodkiException, ZeroWyplataException {
         if (wyplacanaKwota > srodki) {
             throw new NiewystarczajaceSrodkiException();
