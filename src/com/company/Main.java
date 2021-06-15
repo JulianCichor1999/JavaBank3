@@ -196,7 +196,8 @@ public class Main extends JFrame implements Runnable {
             changePanel(1);
 
             componentJTextField.get("textNumerKartyPole").setText("");
-            componentJTextField.get("textPinPole").setText("");});
+            componentJTextField.get("textPinPole").setText("");
+        });
     }
 
     @Override
