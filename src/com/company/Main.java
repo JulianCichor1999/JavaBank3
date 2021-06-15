@@ -3,7 +3,6 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -123,106 +122,81 @@ public class Main extends JFrame implements Runnable {
 
         add(panelAktywny);
 
-        componentJButton.get("buttonPotwierdzenie").addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (numerAktywnegoPanelu == 1) {
-                    aktywnaKarta = Tester.czyNumerKartyZgadzaSie(componentJTextField.get("textNumerKartyPole").getText(), klienci);
+        componentJButton.get("buttonPotwierdzenie").addActionListener(e -> {
+            if (numerAktywnegoPanelu == 1) {
+                aktywnaKarta = Tester.czyNumerKartyZgadzaSie(componentJTextField.get("textNumerKartyPole").getText(), klienci);
 
 
 //                  gdy uzytkownik podal błędny nr karty
-                    if (aktywnaKarta == -1) {
-                        JOptionPane.showMessageDialog(null, "Nie znaleziono karty o podanym numerze w naszym banku.", "Brak karty", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
+                if (aktywnaKarta == -1) {
+                    JOptionPane.showMessageDialog(null, "Nie znaleziono karty o podanym numerze w naszym banku.", "Brak karty", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
 //                  gdy uzytkownik podal poprawnie nr karty
-                    changePanel(2);
+                changePanel(2);
 
-                } else if (numerAktywnegoPanelu == 2) {
-                    if (componentJTextField.get("textPinPole").getText().length() == 0) return;
+            } else if (numerAktywnegoPanelu == 2) {
+                if (componentJTextField.get("textPinPole").getText().length() == 0) return;
 
 //                  gdy użytkownik podał poprawny kod PIN
-                    if (klienci.get(aktywnaKarta).getPin() == Short.parseShort(componentJTextField.get("textPinPole").getText())) {
-                        changePanel(3);
-                        return;
-                    }
+                if (klienci.get(aktywnaKarta).getPin() == Short.parseShort(componentJTextField.get("textPinPole").getText())) {
+                    changePanel(3);
+                    return;
+                }
 
 //                  gdy uzytkownik podal bledny PIN
-                    JOptionPane.showMessageDialog(null, "Wprowadzono niepoprawny numer PIN.", "Błąd uwierzytelnienia", JOptionPane.ERROR_MESSAGE);
-                }
-                else if (numerAktywnegoPanelu == 3) {
-                    changePanel(1);
-                } else if (numerAktywnegoPanelu == 5) {
-                    try {
-                        klienci.get(aktywnaKarta).wyplacPieniadze(Float.parseFloat(componentJTextField.get("textWyplacanePieniadze").getText()));
-                        JOptionPane.showMessageDialog(null, String.format("Wypłacono %szł", componentJTextField.get("textWyplacanePieniadze").getText()), "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
-
-                    } catch (NiewystarczajaceSrodkiException niewystarczajaceSrodkiException) {
-                        JOptionPane.showMessageDialog(null, "Nie masz wystarczających środków na koncie!", "Brak środków", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (ZeroWyplataException zeroWyplataException) {
-                        JOptionPane.showMessageDialog(null, "Nie możesz wypłacić zero złotych!", "Zero złotych wypłata", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (NumberFormatException err) {
-                        JOptionPane.showMessageDialog(null, "Wprowadziłeś niepoprawne dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    changePanel(3);
-                }
-                else if (numerAktywnegoPanelu == 6) {
-                    try {
-                        String kwotaWplaty = klienci.get(aktywnaKarta).doliczSrodki(Float.parseFloat(componentJTextField.get("textWplacanePieniadze").getText()));
-                        JOptionPane.showMessageDialog(null, kwotaWplaty, "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
-                    } catch (NumberFormatException err) {
-                        JOptionPane.showMessageDialog(null, "Wprowadziłeś niepoprawne dane!", "Informacja", JOptionPane.ERROR_MESSAGE);
-                        System.out.println(err.toString());
-                        return;
-                    }
-
-                    changePanel(3);
-                }
-                else {
-                    changePanel(3);
-                }
+                JOptionPane.showMessageDialog(null, "Wprowadzono niepoprawny numer PIN.", "Błąd uwierzytelnienia", JOptionPane.ERROR_MESSAGE);
             }
-        });
+            else if (numerAktywnegoPanelu == 3) {
+                changePanel(1);
+            } else if (numerAktywnegoPanelu == 5) {
+                try {
+                    klienci.get(aktywnaKarta).wyplacPieniadze(Float.parseFloat(componentJTextField.get("textWyplacanePieniadze").getText()));
+                    JOptionPane.showMessageDialog(null, String.format("Wypłacono %szł", componentJTextField.get("textWyplacanePieniadze").getText()), "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
 
-        componentJButton.get("buttonPowrot").addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                } catch (NiewystarczajaceSrodkiException niewystarczajaceSrodkiException) {
+                    JOptionPane.showMessageDialog(null, "Nie masz wystarczających środków na koncie!", "Brak środków", JOptionPane.INFORMATION_MESSAGE);
+                } catch (ZeroWyplataException zeroWyplataException) {
+                    JOptionPane.showMessageDialog(null, "Nie możesz wypłacić zero złotych!", "Zero złotych wypłata", JOptionPane.INFORMATION_MESSAGE);
+                } catch (NumberFormatException err) {
+                    JOptionPane.showMessageDialog(null, "Wprowadziłeś niepoprawne dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                changePanel(3);
+            }
+            else if (numerAktywnegoPanelu == 6) {
+                try {
+                    String kwotaWplaty = klienci.get(aktywnaKarta).doliczSrodki(Float.parseFloat(componentJTextField.get("textWplacanePieniadze").getText()));
+                    JOptionPane.showMessageDialog(null, kwotaWplaty, "Podsumowanie", JOptionPane.PLAIN_MESSAGE);
+                } catch (NumberFormatException err) {
+                    JOptionPane.showMessageDialog(null, "Wprowadziłeś niepoprawne dane!", "Informacja", JOptionPane.ERROR_MESSAGE);
+                    System.out.println(err.toString());
+                    return;
+                }
+
+                changePanel(3);
+            }
+            else {
                 changePanel(3);
             }
         });
 
-        componentJButton.get("buttonPowrotPIN").addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                changePanel(1);
-            }
-        });
+        componentJButton.get("buttonPowrot").addActionListener(e -> changePanel(3));
 
-        componentJButton.get("buttonWyswietlSrodki").addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) { changePanel(4); }
-        });
+        componentJButton.get("buttonPowrotPIN").addActionListener(e -> changePanel(1));
 
-        componentJButton.get("buttonWyplacPieniadze").addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) { changePanel(5); }
-        });
+        componentJButton.get("buttonWyswietlSrodki").addActionListener(e -> changePanel(4));
 
-        componentJButton.get("buttonWplacPieniadze").addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) { changePanel(6); }
-        });
+        componentJButton.get("buttonWyplacPieniadze").addActionListener(e -> changePanel(5));
 
-        componentJButton.get("buttonWyloguj").addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                changePanel(1);
+        componentJButton.get("buttonWplacPieniadze").addActionListener(e -> changePanel(6));
 
-                componentJTextField.get("textNumerKartyPole").setText("");
-                componentJTextField.get("textPinPole").setText("");}
-        });
+        componentJButton.get("buttonWyloguj").addActionListener(e -> {
+            changePanel(1);
+
+            componentJTextField.get("textNumerKartyPole").setText("");
+            componentJTextField.get("textPinPole").setText("");});
     }
 
     @Override
@@ -313,7 +287,6 @@ public class Main extends JFrame implements Runnable {
                     String.format("Ile chcesz wypłacić pieniędzy:")));
             componentJTextField.put("textWyplacanePieniadze", new JTextField());
             componentJButton.put("buttonWyplac", new JButton("Wypłać"));
-//            buttonWyplac.addActionListener(klienci.get(aktywnaKarta).wyplacPieniadze(Float.parseFloat(textWyplacanePieniadze.getText())));
             panelAktywny.add(componentJLabels.get("labelWyplata"));
             panelAktywny.add(componentJTextField.get("textWyplacanePieniadze"));
             panelAktywny.add(componentJButton.get("buttonPotwierdzenie"));
